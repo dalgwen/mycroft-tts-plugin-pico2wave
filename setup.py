@@ -5,10 +5,10 @@ from setuptools import setup
 with open(join(dirname(abspath(__file__)), 'requirements.txt')) as f:
     requirements = f.readlines()
 
-PLUGIN_ENTRY_POINT = 'azure_tts = mycroft_tts_plugin_pico2wave:Pico2WavePlugin'
+PLUGIN_ENTRY_POINT = 'pico2wave = mycroft_tts_plugin_pico2wave:Pico2WaveTTSPlugin'
 setup(
-    name='mycroft-tts-plugin-pico2wave',
-    version='0.1',
+    name='mycroft_tts_plugin_pico2wave',
+    version='0.2',
     description='A tts plugin for mycroft, using pico2wave',
     url='http://github.com/dalgwen/mycroft-tts-plugin-pico2wave',
     author='Gwendal Roulleau',
