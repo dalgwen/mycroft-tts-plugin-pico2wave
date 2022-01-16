@@ -14,13 +14,8 @@
 #
 
 from mycroft.tts import TTS, TTSValidator
-from mycroft.util.log import LOG
-from mycroft.configuration import Configuration
 
 import subprocess
-from datetime import datetime, timedelta
-import requests
-from xml.etree import ElementTree
 
 
 class Pico2WaveTTSPlugin(TTS):
@@ -28,7 +23,7 @@ class Pico2WaveTTSPlugin(TTS):
     """TTS module for generating speech using ESpeak."""
     def __init__(self, lang, config):
         super(Pico2WaveTTSPlugin, self)\
-            .__init__(lang, config, Pico2WaveTTSValidator(self), 'wav')
+            .__init__(lang, config, Pico2WaveTTSValidator(self))
         self.config = config
         self.lang = self.config.get("lang", "en-US")
 
@@ -55,7 +50,11 @@ class Pico2WaveTTSValidator(TTSValidator):
         pass
 
     def validate_connection(self):
-        self.tts.renew_token()
+        try:
+            subprocess.call(['pico2wave', '--usage'])
+        except Exception:
+            raise Exception('pico2wave is not installed. Please install it on '
+                            'your system and restart Mycroft.')
 
     def get_tts_class(self):
         return Pico2WaveTTSPlugin
